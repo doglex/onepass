@@ -1,6 +1,12 @@
 # onepass
 onepass: password manager for human
-> 自制密码管理器，用着放心
+
+- simple & stupid
+- run & delete anytime
+- portable & green
+- out of box
+- high performance
+- network independent
 
 
 ## Test
@@ -26,6 +32,7 @@ env GOOS=linux GOARCH=amd64 go build -ldflags "-w"
 ## use 
 ```
 add onepass.exe folder to envrionment $PATH and you can use it from anywhere 
+you can copy .onepass.save to another machine to use 
 
 
 onepass {appName}  # if found, copy into clipboard. else new and copy
