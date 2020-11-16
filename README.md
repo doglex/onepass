@@ -15,7 +15,7 @@ go test -run TestGenPassword
 ```
 
 
-## test
+## Debug
 ```
 go build && onepass -v -f -s 8 app
 go build && onepass app5
