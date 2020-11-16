@@ -46,3 +46,11 @@ func HistoryAdd(key string, value string) {
 		fmt.Println("Error", err)
 	}
 }
+
+func HistoryList() {
+	i := 0
+	for k := range DbHistory.Items() {
+		i++
+		fmt.Println(i, k)
+	}
+}

@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/atotto/clipboard"
+	"log"
 	"math/rand"
 	"strings"
 	"time"
@@ -12,11 +14,13 @@ var (
 	Verbose bool
 	Force   bool
 	Size    int
+	ListApp bool
 )
 
 func init() {
 	flag.BoolVar(&Verbose, "v", false, "verbose password")
 	flag.BoolVar(&Force, "f", false, "force update")
+	flag.BoolVar(&ListApp, "l", false, "list apps")
 	flag.IntVar(&Size, "s", 10, "password size")
 	flag.Parse()
 	//fmt.Println("verbose:", Verbose)
@@ -38,13 +42,14 @@ func Work(app string) {
 		HistoryAdd(app, v)
 		fmt.Println("->Force renewed password for:", app, "\tsize:", Size)
 	}
-
+	err := clipboard.WriteAll(v)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	fmt.Println("->Already Copied. You can use it by Ctrl + V or Win + V")
 	if Verbose {
 		fmt.Println(v)
 	}
-
-	// todo: set clipboard
 }
 
 func GenPassword(size int) (password string) {
@@ -56,6 +61,9 @@ func GenPassword(size int) (password string) {
 		collector = append(collector, c)
 	}
 	for i := 0; i < 10; i++ {
+		collector = append(collector, fmt.Sprint(i))
+		collector = append(collector, fmt.Sprint(i))
+		collector = append(collector, fmt.Sprint(i))
 		collector = append(collector, fmt.Sprint(i))
 	}
 	rand.Seed(time.Now().Unix())
