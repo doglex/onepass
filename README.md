@@ -1,5 +1,7 @@
 # onepass
 onepass: password manager for human
+> 自制密码管理器，用着放心
+
 
 ## Test
 ```
