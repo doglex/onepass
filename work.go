@@ -1,11 +1,51 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"math/rand"
 	"strings"
 	"time"
 )
+
+var (
+	Verbose bool
+	Force   bool
+	Size    int
+)
+
+func init() {
+	flag.BoolVar(&Verbose, "v", false, "verbose password")
+	flag.BoolVar(&Force, "f", false, "force update")
+	flag.IntVar(&Size, "s", 10, "password size")
+	flag.Parse()
+	//fmt.Println("verbose:", Verbose)
+	//fmt.Println("force:", Force)
+	//fmt.Println("size:", Size)
+}
+
+func Work(app string) {
+	v, ok := HistoryContains(app)
+	if ok {
+		fmt.Println("->Found in Cache:", app)
+	} else {
+		v = GenPassword(Size)
+		HistoryAdd(app, v)
+		fmt.Println("->Generated password for:", app, "\tsize:", Size)
+	}
+	if Force {
+		v = GenPassword(Size)
+		HistoryAdd(app, v)
+		fmt.Println("->Force renewed password for:", app, "\tsize:", Size)
+	}
+
+	fmt.Println("->Already Copied. You can use it by Ctrl + V or Win + V")
+	if Verbose {
+		fmt.Println(v)
+	}
+
+	// todo: set clipboard
+}
 
 func GenPassword(size int) (password string) {
 	var choices = [...]string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",

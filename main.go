@@ -1,5 +1,9 @@
 package main
 
+import "flag"
+
 func main() {
-	GenPassword(10)
+	// todo: list all history
+	app := flag.Args()[0]
+	Work(app)
 }
